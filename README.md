@@ -29,13 +29,13 @@ El proyecto está construido de la siguiente manera:
 
 - **images/**: Carpeta que contiene archivos de imagen generados durante la ejecución del código o de fuentes externas.
 
-- **notebooks/**: Carpeta que contiene los archivos `.ipynb` utilizados en la captura y tratamiento de los datos. Están numerados para su ejecución secuencial.
+- **notebooks/**: Carpeta que contiene los archivos `.ipynb` utilizados en la captura y tratamiento de los datos. Están numerados para su ejecución secuencial, y contenidos dentro de 3 carpetas, una para cada modelo, conteniendo cada una de ellas:
   - `1_EDA`
   - `2_Encoding`
   - `3_Outliers`
   - `4_Estandarización`
-  - `5_Predicciones`
-  - `6_Streamlit`
+  - `5_Modelos`
+  - `6_Predicciones`
 
 - **src/**: Carpeta que contiene los archivos `.py`, con las funciones y variables utilizadas en los distintos notebooks.
 
@@ -112,7 +112,13 @@ El proyecto está construido de la siguiente manera:
 
 ## Conclusiones
 
-- xxxx
+- Hemos creado tres modelos para la predicción de los precios del alquiler. La principal dificultar con la que nos hemos encontrado es el overfitting en los modelos. El overfitting ocurre cuando un modelo se "aprende de memoria" los datos de entrenamiento, entonces, cuando entra un nuevo dato desconocido, es incapaz de predecirlo con precisión.
+
+- Para disminuir el overfitting, tenemos varias alternativas, incluyendo: disminuir el número de variables predictoras, aumentar la cantidad de datos o disminuir la profundidad de los árboles, cuando corresponda, de modo que sean menos específicos.
+
+- Tras numerosas iteraciones, nos quedaremos con el Modelo 2, que tiene unas métricas para el R2 de 0.53 y 0.59 respectivamente para el train y el test, y un RMSE de 39.9 y 39.2.
+
+- Corresponde seguir trabajando sobre el modelo para mejorar estas métricas, y conseguir predecir mejor el precio del alquiler de las viviendas.
 
 
 ## Autor

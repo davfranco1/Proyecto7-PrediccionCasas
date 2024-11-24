@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import pickle
+import time
 
 from category_encoders import TargetEncoder, OneHotEncoder
 from sklearn.preprocessing import StandardScaler
@@ -14,13 +15,13 @@ st.set_page_config(
 )
 
 # Título y descripción
-st.title("🏠 Predicción de Precios de Casas con Machine Learning")
-st.write("Usa esta aplicación para predecir el precio de una casa basándote en sus características. ¡Sorpréndete con la magia de los datos! 🚀")
+st.title("🏠 Predicción de Precios de Casas en Madrid con Machine Learning")
+st.write("Esta aplicación permite predecir el precio del alquiler de una casa basándonos en sus características.")
 
 # Mostrar una imagen llamativa
 st.image(
     "images/header.png",  # URL de la imagen
-    caption="Tu próxima casa está aquí.",
+    #caption="Tu próxima casa está aquí.",
     use_container_width=True,
 )
 
@@ -47,26 +48,47 @@ st.header("🔧 Características de la casa")
 col1, col2 = st.columns(2)
 
 with col1:
-    neighborhood = st.selectbox("Barrio", ["A", "B", "C", "D"], help="Selecciona el barrio de la casa.")
-    house_type = st.selectbox("Tipo de Casa", ["Detached", "Semi-Detached"], help="Elige el tipo de casa.")
+    propertytype = st.selectbox("Tipo de Casa", ["flat", "studio", "duplex", "penthouse", "chalet", "countryHouse"], help="Selecciona el tipo de casa.")
+    exterior = st.selectbox("Exterior", ["True", "False", "Sin información"], help="Elige característica de la casa.")
+    hasLift = st.selectbox("Tiene Ascensor", ["True", "False"], help="Elige característica de la casa.")
+    municipality = st.selectbox("Municipio", ['Madrid', 'San Sebastián de los Reyes', 'Villamanrique de Tajo',
+       'Rascafría', 'Manzanares el Real', 'Miraflores de la Sierra',
+       'Galapagar', 'Arganda', 'San Lorenzo de el Escorial',
+       'Villanueva del Pardillo', 'Aranjuez', 'Las Rozas de Madrid',
+       'Navalcarnero', 'Alcalá de Henares', 'El Escorial', 'Leganés',
+       'Coslada', 'Torrejón de Ardoz', 'Camarma de Esteruelas',
+       'Alcorcón', 'Valdemoro', 'Collado Villalba', 'Getafe',
+       'Paracuellos de Jarama', 'El Molar', 'Parla', 'Tres Cantos',
+       'Quijorna', 'Valdemorillo', 'Pedrezuela', 'Daganzo de Arriba',
+       'Guadarrama', 'Cobeña', 'El Álamo', 'Algete', 'Rivas-Vaciamadrid',
+       'Pinto', 'Los Santos de la Humosa', 'San Fernando de Henares',
+       'Aldea del Fresno', 'Fuenlabrada', 'Mataelpino', 'Villa del Prado',
+       'Los Molinos', 'Colmenar Viejo', 'Móstoles', 'Navalafuente',
+       'Robledo de Chavela', 'Villaviciosa de Odón', 'Pozuelo de Alarcón',
+       'Bustarviejo', 'Collado Mediano', 'Chinchón', 'Colmenarejo',
+       'Loeches', 'Sevilla la Nueva', 'Campo Real', 'Torrelaguna',
+       'Villalbilla', 'Alcobendas'])
 
 with col2:
-    rooms = st.number_input("Número de Habitaciones", min_value=1, max_value=10, value=3, step=1)
-    area = st.number_input("Área en m²", min_value=50, max_value=500, value=120, step=10)
+    rooms = st.number_input("Número de Habitaciones", min_value=1, max_value=6, step=1)
+    bathrooms = st.number_input("Número de Baños", min_value=1, max_value=3, step=1)
+    size = st.number_input("Área en m²", min_value=50, max_value=100, step=10)
+    floor = st.number_input("Planta", min_value=0, max_value=14, step=1)
+    distance = st.number_input("Distancia al centro", min_value=0, max_value=10000, step=1)
 
 # Botón para realizar la predicción
 if st.button("💡 Predecir Precio"):
     # Crear DataFrame con los datos ingresados
     nueva_casa = pd.DataFrame({
-    'propertyType': ["Flat"], 
-    'size': [60],
-    'exterior': ["True"],
-    'rooms': [2],
-    'bathrooms': [1],
-    'municipality':["Madrid"],
-    'distance':[2000],
-    'floor':[2],
-    'hasLift':["True"]
+    'propertyType': [propertytype], 
+    'size': [size],
+    'exterior': [exterior],
+    'rooms': [rooms],
+    'bathrooms': [bathrooms],
+    'municipality':[municipality],
+    'distance':[distance],
+    'floor':[floor],
+    'hasLift':[hasLift]
     })
 
     df_new = pd.DataFrame(nueva_casa)
@@ -124,11 +146,12 @@ if st.button("💡 Predecir Precio"):
         'distance_standard']]
 
     # Realizar la predicción
-    prediction = model.predict(df_pred)[0]
+    prediction = round(model.predict(df_pred)[0],0)
 
     # Mostrar el resultado
-    st.success(f"💵 El precio estimado de la casa es: ${prediction}")
-    st.balloons()
+    with st.spinner('Estamos calculando el valor del alquiler...'):
+        time.sleep(3)
+    st.success(f"💵 El precio estimado del alquiler de la casa es de {prediction}€")
 
 # Pie de página
 st.markdown(
