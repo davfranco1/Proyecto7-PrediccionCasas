@@ -109,6 +109,8 @@ El proyecto está construido de la siguiente manera:
 
 4. Ejecuta el código en los notebooks, modificándolo si es necesario.
 
+5. Para utilizar la app de Streamlit, copia el repositorio, abre una terminal en la carpeta base, y ejecuta el comando `streamlit run main.py`, que abrirá un navegador donde se ejecuta automáticamente el código. Recuerda que antes debes haber instalado la librería `pip install streamlit`.
+
 
 ## Conclusiones
 
