@@ -120,7 +120,14 @@ El proyecto está construido de la siguiente manera:
 
 - Tras numerosas iteraciones, nos quedaremos con el Modelo 2, que tiene unas métricas para el R2 de 0.53 y 0.59 respectivamente para el train y el test, y un RMSE de 39.9 y 39.2.
 
-- Corresponde seguir trabajando sobre el modelo para mejorar estas métricas, y conseguir predecir mejor el precio del alquiler de las viviendas.
+
+
+
+## Próximos pasos
+
+- Corresponde seguir trabajando sobre el modelo para mejorar estas métricas, y conseguir predecir mejor el precio del alquiler de las viviendas. El primer paso sería intentar obtener más datos, de cara a mejorar el modelo.
+
+- También puede mejorarse la app de Streamlit, añadiendo las explicaciones del modelo en esta página.
 
 
 ## Autor
